@@ -1,4 +1,9 @@
 ---
+version: 0.03
+date:    Tue May 18 10:54:28 EDT 2004
+changes:
+- fixed ImageScraper plugin and added support for double-slash URIs like the first image link on slashdot.org
+---
 version: 0.02
 date:    Sun May  9 12:47:44 EDT 2004
 changes:

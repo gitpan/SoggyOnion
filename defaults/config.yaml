@@ -120,3 +120,12 @@ layout:
 #    name: blogs.html
 #    items:
 
+  - title: TEMP
+    name: temp.html
+    items:
+      - images: http://www.google.com/
+        id: goog
+      - images: http://www.slashdot.org/
+        id: slash
+
+

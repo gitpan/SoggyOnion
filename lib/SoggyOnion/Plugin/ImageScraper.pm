@@ -66,13 +66,25 @@ sub content {
     # no prefix in the conf? go through and make sure that all our links are
     # absolute. if they're relative, prepend the source URL
     else {
+
+        # determine protocol -- use if double-slash shorthand is used
+        $self->{images} =~ m/^(\w+):/;
+        my $protocol = $1;
+        
+        # strip connecting slash
+        $self->{images} =~ s#/+$##;
+
         for ( @links ) {
-            $_ = $self->{images}
-                # did the images we specify end with a slash?
-                # if not, add one for us
-                . ( $self->{images} =~ m#/$# ? '' : '/' ) 
-                . $_
-                unless m/^https?:\/\//;
+
+            # valid but uncommon URI shorthand
+            $_ = "$protocol\:$_" if m#^//[^/]#;
+
+            # strip connecting slashes
+            s#^/+##;
+
+            # prepend relative URIs with our source URI
+            $_ = $self->{images} . '/' . $_
+                unless m/^\w+:\/\//;
         }
     }   
 
