@@ -1,4 +1,11 @@
 ---
+version: 0.02
+date:    Sun May  9 12:47:44 EDT 2004
+changes:
+- quick, small tweaks
+- modified config.yaml
+- fixed module prerequisits in Makefile.PL
+---
 version: 0.01
 date:    Thu Apr 15 20:49:07 EDT 2004
 changes:

@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 # soggyonion and the default plugins use the Template Toolkit
 use Template;
@@ -198,11 +198,10 @@ SoggyOnion - RSS and other arbitrary content aggregatron
 
 B<NOTE:> This is a pre-release. I need to add tests, among other things. Functionality is here, though.
 
-SoggyOnion is an RSS and arbitrary content aggregator that produces
-static pages. It was written to be easily installable and configurable
-as well as trivial to extend. It is meant for people that want to
-collect RSS feeds and other scraped content and view the result via
-a web browser but want minimal setup and configuration.
+SoggyOnion is an RSS and arbitrary content aggregator that produces static
+pages. It was written to be easily installable and configurable as well as
+trivial to extend. It is meant for people that want to view RSS feeds and other
+scraped content as a web page and want minimal setup and configuration.
 
 See the defaults in action at: L<http://soggyonion.com/>
 

@@ -52,6 +52,9 @@ layout:
         icon: http://perl.com/images/75-logo.jpg
         id: perldotcom
         limit: 10
+      - rss: http://www.theperlreview.com/rss/tpr-all.rdf
+        id: perlreview
+        limit: 15
 
   - title: Open-Source and More
     name: opensource.html
@@ -94,9 +97,9 @@ layout:
         id: joecunningham
       - images: http://www.ferociouscheese.com/
         id: ferociouscheese
-      - images: http://sensitivelight.com/blog/
-        id: sensitivelight
-        limit: 3
+#      - images: http://sensitivelight.com/blog/
+#        id: sensitivelight
+#        limit: 3
 
   - title: Miscellaneous
     name: misc.html

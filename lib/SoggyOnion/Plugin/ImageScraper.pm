@@ -111,16 +111,7 @@ In F<config.yaml>:
 
 =head1 DESCRIPTION
 
-This is a plugin for L<SoggyOnion> that gets RSS feeds.
-
-=head2 Global Options
-
-=over 4
-
-=item * C<max_desc_length> - what length to trim the descriptions
-returned by the feeds
-
-=back
+This is a plugin for L<SoggyOnion> that grabs a series of E<lt>IMGE<gt> tags from a URI and adds them to the SoggyOnion output page.
 
 =head2 Item Options
 

@@ -16,23 +16,23 @@ WriteMakefile(
         bin/soggyonion
     )],
     PREREQ_PM         => {qw(
-        Cache::FileCache
-        File::Basename
-        File::Find::Rule
-        File::Path
-        Geo::Weather
-        HTML::Entities
-        HTML::Strip
-        HTML::TokeParser
-        IO::All
-        IO::Scalar
-        LWP::Simple
-        Parallel::ForkManager
-        Template
-        Test::More
-        XML::RSS
-        YAML
-        )},
+        Cache::FileCache            0
+        File::Basename              0
+        File::Find::Rule            0
+        File::Path                  0
+        Geo::Weather                0
+        HTML::Entities              0
+        HTML::Strip                 0
+        HTML::TokeParser            0
+        IO::All                     0
+        IO::Scalar                  0
+        LWP::Simple                 0
+        Parallel::ForkManager       0
+        Template                    0
+        Test::More                  0
+        XML::RSS                    0
+        YAML                        0
+    )},
     dist => {
         'PREOP'       => 'pod2text lib/SoggyOnion.pm >README',
     },

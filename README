@@ -13,9 +13,9 @@ DESCRIPTION
 
     SoggyOnion is an RSS and arbitrary content aggregator that produces
     static pages. It was written to be easily installable and configurable
-    as well as trivial to extend. It is meant for people that want to
-    collect RSS feeds and other scraped content and view the result via a
-    web browser but want minimal setup and configuration.
+    as well as trivial to extend. It is meant for people that want to view
+    RSS feeds and other scraped content as a web page and want minimal setup
+    and configuration.
 
     See the defaults in action at: <http://soggyonion.com/>
 
