@@ -1,0 +1,19 @@
+bin/soggyonion-install.PL
+bin/soggyonion.PL
+Changes
+defaults/config.yaml
+defaults/templates/imagescraper.tt2
+defaults/templates/main.tt2
+defaults/templates/rss.tt2
+lib/SoggyOnion.pm
+lib/SoggyOnion/Plugin.pm
+lib/SoggyOnion/Plugin/GeoWeather.pm
+lib/SoggyOnion/Plugin/ImageScraper.pm
+lib/SoggyOnion/Plugin/RSS.pm
+lib/SoggyOnion/Resource.pm
+logo.svg
+Makefile.PL
+MANIFEST
+README
+t/all.t
+META.yml                                Module meta-data (added by MakeMaker)
