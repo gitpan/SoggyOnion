@@ -1,4 +1,9 @@
 ---
+version: 0.04
+date:    Sun Dec  4 22:00:27 EST 2005
+changes:
+- improved Kwalitee
+---
 version: 0.03
 date:    Tue May 18 10:54:28 EDT 2004
 changes:

@@ -2,6 +2,8 @@ package SoggyOnion::Resource;
 use warnings;
 use strict;
 
+our $VERSION = '0.04';
+
 # make sure that plugins i expect to use are loaded
 require SoggyOnion::Plugin::RSS;
 require SoggyOnion::Plugin::ImageScraper;
@@ -14,7 +16,7 @@ sub new {
         warn "\t\titems must be a hash (got '$item')\n";
         return;
     }
-    if ( not (defined $item->{id}) || $item->{id} =~ /\W/ ) {
+    if ( not( defined $item->{id} ) || $item->{id} =~ /\W/ ) {
         warn "\t\titems must have an alphanumeric-only 'id' key\n";
         return;
     }
@@ -34,23 +36,22 @@ sub new {
 
         # try requiring
         eval "require $item->{plugin}";
-        if ( $@ ) {
+        if ($@) {
             warn "\t\t$@\n";
             return;
         }
 
         # try actually getting an object from it
         my $rval;
-        eval {
-            $rval = $item->{plugin}->new($item);
-        };
+        eval { $rval = $item->{plugin}->new($item); };
         warn "\t\t$@\n" if $@;
         return $rval;
     }
 
     # augh, no handler at all!
-    warn "\t\titem contained keys qw(".join(' ',keys %$item)
-        .") but don't know how to handle it\n";
+    warn "\t\titem contained keys qw("
+        . join( ' ', keys %$item )
+        . ") but don't know how to handle it\n";
     return;
 }
 
@@ -91,7 +92,7 @@ L<SoggyOnion::Plugin>, L<SoggyOnion>
 
 =head1 AUTHOR
 
-Ian Langworth E<lt>ian@E<gt>
+Ian Langworth, C<< <ian@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 

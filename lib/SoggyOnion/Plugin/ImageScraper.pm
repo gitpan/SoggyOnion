@@ -3,6 +3,8 @@ use warnings;
 use strict;
 use base qw( SoggyOnion::Plugin );
 
+our $VERSION = '0.04';
+
 use Template;
 use constant TEMPLATE_FILE => 'imagescraper.tt2';
 
@@ -10,7 +12,7 @@ use LWP::Simple qw(get head $ua);
 use constant MOD_TIME => 2;
 
 use HTML::TokeParser;
-use constant { TYPE=>0, TAG=>1, ATTR=>2 };
+use constant { TYPE => 0, TAG => 1, ATTR => 2 };
 
 # set our useragent to be nice
 sub init {
@@ -21,9 +23,9 @@ sub init {
 # if we can't, just return the current time to make sure the feed is
 # processed.
 sub mod_time {
-    my $self = shift;
-    my $mtime = [ head($self->{rss}) ]->[ MOD_TIME ];
-    return $mtime || time; # in case no modification time is available
+    my $self  = shift;
+    my $mtime = [ head( $self->{rss} ) ]->[MOD_TIME];
+    return $mtime || time;    # in case no modification time is available
 }
 
 sub content {
@@ -38,7 +40,7 @@ sub content {
     $self->{limit}  ||= 1;
 
     # get the URL
-    my $document = get($self->{images});
+    my $document = get( $self->{images} );
     die "couldn't get document" unless defined $document;
 
     # cheap way of getting title! FIXME
@@ -47,10 +49,10 @@ sub content {
     my $title = $1;
 
     # process links
-    my $parser = HTML::TokeParser->new(\$document) or die $!;
-    my $i = 0;
-    my @links = ();
-    while (my $token = $parser->get_token) {
+    my $parser = HTML::TokeParser->new( \$document ) or die $!;
+    my $i      = 0;
+    my @links  = ();
+    while ( my $token = $parser->get_token ) {
         next unless ref $token eq 'ARRAY';
         next unless $token->[TYPE] eq 'S' && $token->[TAG] eq 'img';
         next unless $i++ >= $self->{offset};
@@ -70,11 +72,11 @@ sub content {
         # determine protocol -- use if double-slash shorthand is used
         $self->{images} =~ m/^(\w+):/;
         my $protocol = $1;
-        
+
         # strip connecting slash
         $self->{images} =~ s#/+$##;
 
-        for ( @links ) {
+        for (@links) {
 
             # valid but uncommon URI shorthand
             $_ = "$protocol\:$_" if m#^//[^/]#;
@@ -86,16 +88,16 @@ sub content {
             $_ = $self->{images} . '/' . $_
                 unless m/^\w+:\/\//;
         }
-    }   
+    }
 
     # run it through our template
-    my $tt = Template->new(
-        INCLUDE_PATH => SoggyOnion->options->{templatedir})
+    my $tt
+        = Template->new( INCLUDE_PATH => SoggyOnion->options->{templatedir} )
         or die "couldn't create Template object\n";
     my $output;
-    $tt->process( TEMPLATE_FILE, 
-      { links => \@links, src => $self->{images}, title => $title }, 
-      \$output )
+    $tt->process( TEMPLATE_FILE,
+        { links => \@links, src => $self->{images}, title => $title },
+        \$output )
         or die $tt->error;
     return $output;
 }
@@ -147,7 +149,7 @@ L<SoggyOnion>
 
 =head1 AUTHOR
 
-Ian Langworth E<lt>ian@E<gt>
+Ian Langworth, C<< <ian@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 

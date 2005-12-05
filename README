@@ -17,8 +17,6 @@ DESCRIPTION
     RSS feeds and other scraped content as a web page and want minimal setup
     and configuration.
 
-    See the defaults in action at: <http://soggyonion.com/>
-
   Installation
     The module creates two executables, soggyonion and soggyonion-install.
     Once the SoggyOnion module is installed, do the following:
@@ -38,8 +36,10 @@ DESCRIPTION
     See: SoggyOnion::Plugin
 
   Why is it called "SoggyOnion?"
-    I purchased the domain "csoggyonion.com" on complete impulse. When I
+    I purchased the domain "soggyonion.com" on complete impulse. When I
     wrote this I finally made use of that silly domain and I kept the name.
+
+    I not longer own this domain.
 
   Why don't I use (RSS utility here)?
     If you like it better, please do. I welcome all suggestions and
@@ -54,10 +54,8 @@ DESCRIPTION
 SEE ALSO
     SoggyOnion::Plugin, XML::RSS, YAML
 
-    <http://soggyonion.com/>
-
 AUTHOR
-    Ian Langworth <ian@>
+    Ian Langworth, "<ian@cpan.org>"
 
 COPYRIGHT AND LICENSE
     Copyright (C) 2004 by Ian Langworth

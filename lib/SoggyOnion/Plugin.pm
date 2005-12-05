@@ -2,37 +2,7 @@ package SoggyOnion::Plugin;
 use warnings;
 use strict;
 
-# this is called before we call mod_time and/or content. i use it to set
-# the useragent in LWP::Simple in a few modules
-sub init {}
-
-# simple constructor that wants a hash of options.
-sub new {
-    my ( $class, $data ) = @_;
-    warn "$class\::new() must be passed a hash ref" && return
-        unless ref $data eq 'HASH';
-    bless $data, $class;
-    $data->init;
-    return $data;
-}
-
-# the ID is used for <DIV> tags and internal caching stuff. this is
-# a simple accessor that makes the code cleaner.
-sub id {
-    my $self = shift;
-    return $self->{id};
-}
-
-# the default mod_time method ensures that the resource is always
-# refreshed (cache is never used)
-sub mod_time { time };
-
-# default content stub
-sub content { qq(<p class="error">This is the output of the default plugin class. Something strange has occurred.</p>\n) }
-
-1;
-
-__END__
+our $VERSION = '0.04';
 
 =head1 NAME
 
@@ -65,7 +35,65 @@ SoggyOnion::Plugin - how to extend SoggyOnion
 
 =head1 DESCRIPTION
 
-Docs to be added later.
+This is the base class for all SoggyOnion plugins. 
+
+=head1 METHODS
+
+=head2 new( $hashref )
+
+Constructor that SoggyOnion gives a hash of information. Can be used for the
+plugin's own stash.
+
+=cut
+
+sub new {
+    my ( $class, $data ) = @_;
+    warn "$class\::new() must be passed a hash ref" && return
+        unless ref $data eq 'HASH';
+    bless $data, $class;
+    $data->init;
+    return $data;
+}
+
+=head2 init()
+
+This is called before we call mod_time and/or content. I use it to set the
+useragent in LWP::Simple in a few modules.
+
+=cut
+
+sub init { }
+
+=head2 id()
+
+Return the ID is used for <DIV> tags and internal caching stuff. This is
+a simple accessor that makes the code cleaner.
+
+=cut
+
+sub id {
+    my $self = shift;
+    return $self->{id};
+}
+
+=head2 mod_time()
+
+The default mod_time method ensures that the resource is always refreshed
+(cache is never used).
+
+=cut
+
+sub mod_time {time}
+
+=head2 content()
+
+Return XHTML content.
+
+=cut
+
+sub content {
+    qq(<p class="error">This is the output of the default plugin class. Something strange has occurred.</p>\n)
+}
 
 =head1 SEE ALSO
 
@@ -73,7 +101,7 @@ L<SoggyOnion>
 
 =head1 AUTHOR
 
-Ian Langworth E<lt>ian@E<gt>
+Ian Langworth, C<< <ian@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -83,3 +111,6 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
+1;
+

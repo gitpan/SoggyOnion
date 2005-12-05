@@ -3,18 +3,20 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 # soggyonion and the default plugins use the Template Toolkit
 use Template;
+
 # which template file to use for this module
 use constant TEMPLATE_FILE => 'main.tt2';
 
 # Parallel::ForkManager threads the page creation. i sure hope that
 # Cache::File does the right thing in terms of locking..
 use Parallel::ForkManager;
+
 # how many pages to create at once
-use constant MAX_THREADS   => 10;
+use constant MAX_THREADS => 10;
 
 # use Cache::FileCache to cache the results of plugins
 use Cache::FileCache;
@@ -32,9 +34,10 @@ use SoggyOnion::Resource;
 # a simple accessor for our options -- makes the code look particularly
 # neat in plugins
 our $OPTIONS;
+
 sub options {
     my ( $self, $value ) = @_;
-    if ( $value ) {
+    if ($value) {
         croak "configuration error: options isn't a hash\n"
             unless ref $value eq 'HASH';
         $OPTIONS = $value;
@@ -67,9 +70,8 @@ sub generate {
     # initialize our cache
     my $cache;
     eval {
-        $cache = Cache::FileCache->new({
-            cache_root => $self->options->{cachedir},
-            });
+        $cache = Cache::FileCache->new(
+            { cache_root => $self->options->{cachedir}, } );
     };
     die "error creating cache: $@\n"
         if $@;
@@ -78,13 +80,13 @@ sub generate {
     my $template = Template->new(
         INCLUDE_PATH => $self->options->{templatedir},
         OUTPUT_PATH  => $self->options->{outputdir},
-        );
+    );
 
     # initialize thread manager
-    my $fm = Parallel::ForkManager->new( MAX_THREADS );
+    my $fm = Parallel::ForkManager->new(MAX_THREADS);
 
     # process all pages
-    foreach my $page ( @$layout ) {
+    foreach my $page (@$layout) {
 
         # fork off!
         my $pid = $fm->start and next;
@@ -96,7 +98,7 @@ sub generate {
         my $output;
         my $output_fh = IO::Scalar->new( \$output );
         local *REAL_STDOUT = *STDOUT;
-        local *STDOUT = $output_fh;
+        local *STDOUT      = $output_fh;
 
         # a little feedback
         print "creating page $page->{name} ($page->{title})\n";
@@ -109,8 +111,8 @@ sub generate {
             $fm->finish;
             next;
         }
-        foreach my $item ( @{$page->{items}} ) {
-            
+        foreach my $item ( @{ $page->{items} } ) {
+
             # let SoggyOnion/Resource.pm figure out what kind of
             # resource this is and simply return an object. this is
             # i made it easy to specify a "resourceclass" option in the
@@ -131,16 +133,18 @@ sub generate {
             # mod time is newer, regenerate the content.
             # (see Cache::Cache and Cache::Object for more info)
             my $content = 'empty content';
-            if ( 
-              $cache->get_object( $id ) &&
-              $cache->get_object( $id )->get_created_at >= $resource->mod_time ) {
+            if (   $cache->get_object($id)
+                && $cache->get_object($id)->get_created_at
+                >= $resource->mod_time )
+            {
                 print "\t\tcache is up to date\n";
-                $content = $cache->get( $id );
+                $content = $cache->get($id);
             }
             else {
                 $content = eval { $resource->content };
-                if ( $@ ) {
-                    $content = "error generating this resource: <pre>$@</pre>";
+                if ($@) {
+                    $content
+                        = "error generating this resource: <pre>$@</pre>";
                     warn "\t\terror generating: $@\n";
                     $fm->finish;
                     next;
@@ -156,15 +160,15 @@ sub generate {
         }
 
         # create the output file
-        $template->process( 
+        $template->process(
             TEMPLATE_FILE,
-            {
-                thispage => $page,
+            {   thispage => $page,
                 allpages => $layout,
                 content  => $body,
             },
             $page->{name},
-        ) or warn "\t\t" . $template->error . "\n";
+            )
+            or warn "\t\t" . $template->error . "\n";
 
         # print buffer to output
         print REAL_STDOUT $output;
@@ -178,7 +182,6 @@ sub generate {
 
     print "done!\n";
 }
-
 
 1;
 __END__
@@ -202,8 +205,6 @@ SoggyOnion is an RSS and arbitrary content aggregator that produces static
 pages. It was written to be easily installable and configurable as well as
 trivial to extend. It is meant for people that want to view RSS feeds and other
 scraped content as a web page and want minimal setup and configuration.
-
-See the defaults in action at: L<http://soggyonion.com/>
 
 =head2 Installation
 
@@ -236,9 +237,11 @@ See: L<SoggyOnion::Plugin>
 
 =head2 Why is it called "SoggyOnion?"
 
-I purchased the domain C<csoggyonion.com> on complete impulse. When
+I purchased the domain C<soggyonion.com> on complete impulse. When
 I wrote this I finally made use of that silly domain and I kept the
 name.
+
+I not longer own this domain.
 
 =head2 Why don't I use (RSS utility here)?
 
@@ -255,11 +258,9 @@ any scraped content.
 
 L<SoggyOnion::Plugin>, L<XML::RSS>, L<YAML>
 
-L<http://soggyonion.com/>
-
 =head1 AUTHOR
 
-Ian Langworth E<lt>ian@E<gt>
+Ian Langworth, C<< <ian@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -3,11 +3,13 @@ use warnings;
 use strict;
 use base qw( SoggyOnion::Plugin );
 
+our $VERSION = '0.04';
+
 use Geo::Weather;
 
 sub content {
     my $self = shift;
-    
+
     # we need either the city&state or a zip code
     my @args;
     if ( exists $self->{zip} ) {
@@ -77,7 +79,7 @@ L<SoggyOnion>
 
 =head1 AUTHOR
 
-Ian Langworth E<lt>ian@E<gt>
+Ian Langworth, C<< <ian@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -1,3 +1,4 @@
+.releaserc
 bin/soggyonion-install.PL
 bin/soggyonion.PL
 Changes
@@ -13,7 +14,13 @@ lib/SoggyOnion/Plugin/RSS.pm
 lib/SoggyOnion/Resource.pm
 logo.svg
 Makefile.PL
-MANIFEST
+MANIFEST			This list of files
+MANIFEST.SKIP
+META.yml
 README
+SIGNATURE
+t/0-signature.t
 t/all.t
-META.yml                                Module meta-data (added by MakeMaker)
+t/pod-coverage.t
+t/pod.t
+TODO
